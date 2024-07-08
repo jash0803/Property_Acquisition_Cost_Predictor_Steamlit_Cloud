@@ -1,8 +1,8 @@
-numpy==1.24.0
-pickle-mixin==1.0.2
-streamlit==1.34.0
-streamlit-option-menu==0.3.2
-scikit-learn==1.2.2
-pandas==1.5.3
-seaborn==0.12.2
-matplotlib==3.6.2
+numpy
+pickle-mixin
+streamlit
+streamlit-option-menu
+scikit-learn
+pandas
+seaborn
+matplotlib

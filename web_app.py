@@ -49,7 +49,7 @@ if selected == 'About':
         - Pandas, Seaborn, Matplotlib: For data handling and visualization.
         - Numpy, Pickle: For efficient data processing and model loading.
 
-        ### Want to connect with me?
+        ### 📞 Want to connect with me?
         - [LinkedIn](https://www.linkedin.com/in/jashshah0803/)
         - [GitHub](https://github.com/jash0803)
     """

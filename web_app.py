@@ -10,7 +10,7 @@ from streamlit_option_menu import option_menu
 st.set_page_config(page_title='Cost Calculator')
 
 #loading the model
-loaded_model = pickle.load(open('E:\Machine Learning\HOUSE_PRICE_PREDICTION\Property_acquisition_cost_predictor.sav','rb'))
+loaded_model = pickle.load(open('Property_acquisition_cost_predictor.sav','rb'))
 
 # Sidebar for navigation
 with st.sidebar:
@@ -116,7 +116,7 @@ if selected == 'Visualiser':
     st.title('Data Visualizer for housing price predictor')
 
     # Read the selected CSV file
-    df = pd.read_csv("E:\Machine Learning\HOUSE_PRICE_PREDICTION\Housing.csv")
+    df = pd.read_csv("Housing.csv")
 
     col1, col2 = st.columns(2)
 

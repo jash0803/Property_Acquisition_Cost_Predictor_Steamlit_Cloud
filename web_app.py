@@ -16,7 +16,7 @@ loaded_model = pickle.load(open('Property_acquisition_cost_predictor.sav','rb'))
 with st.sidebar:
     selected = option_menu(
         'Property Acquisition Cost Predictor',
-        ['Calculator', 'Visualiser'],
+        ['About','Calculator', 'Visualiser'],
         default_index=0
     )
 
@@ -35,9 +35,29 @@ def hidden_price_prediction(input_data):
     finalPrice = sum(input_data)
     return finalPrice
 
+if selected == 'About':
+    st.title('Welcome to Property Acquition Cost Predictor Web App')
+    st.markdown(
+        """
+        ### 🔍 What It Does:
+        1. Predicts Property Costs: Utilizing a robust machine learning model, it accurately estimates the acquisition cost of a house based on various features like area, number of bedrooms, bathrooms, and more.
+        2. Calculates Hidden Costs: Beyond the base price, it calculates hidden costs such as society transfer fees, maintenance, insurance, property tax, brokerage, and sales deeds.
+        3. Visualizes Housing Data: With an intuitive visualizer, users can explore and understand housing data trends through different types of plots.
+
+        ### 🔧 Technologies Used:
+        - Streamlit: For an interactive and user-friendly web interface.
+        - Pandas, Seaborn, Matplotlib: For data handling and visualization.
+        - Numpy, Pickle: For efficient data processing and model loading.
+
+        ### Want to connect with me?
+        - [LinkedIn](https://www.linkedin.com/in/jashshah0803/)
+        - [GitHub](https://github.com/jash0803)
+    """
+    )
+
 if selected == 'Calculator':
     #giving a title to the page
-    st.title('Property Acquition Cost Predictor Web App')
+    st.title('Property Acquition Cost Predictor Calculator')
 
     #getting the input data from the user
     											
@@ -108,12 +128,10 @@ if selected == 'Calculator':
             st.success(f'The final cost of your house in a year is: {st.session_state.hiddenPrice}')
         except ValueError:
             st.error("Please enter valid numerical values for all inputs.")
-    
-
 
 if selected == 'Visualiser':
     #giving a title to the page
-    st.title('Data Visualizer for housing price predictor')
+    st.title('Data Visualizer for housing price dataset')
 
     # Read the selected CSV file
     df = pd.read_csv("Housing.csv")

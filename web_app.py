@@ -1,9 +1,24 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import streamlit as st
+from streamlit_option_menu import option_menu
+
+# Set the page config
+st.set_page_config(page_title='Cost Calculator')
 
 #loading the model
-loaded_model = pickle.load(open('Property_acquisition_cost_predictor.sav','rb'))
+loaded_model = pickle.load(open('E:\Machine Learning\HOUSE_PRICE_PREDICTION\Property_acquisition_cost_predictor.sav','rb'))
+
+# Sidebar for navigation
+with st.sidebar:
+    selected = option_menu(
+        'Property Acquisition Cost Predictor',
+        ['Calculator', 'Visualiser'],
+        default_index=0
+    )
 
 def house_price_prediction(input_data):
 
@@ -20,7 +35,7 @@ def hidden_price_prediction(input_data):
     finalPrice = sum(input_data)
     return finalPrice
 
-def main():
+if selected == 'Calculator':
     #giving a title to the page
     st.title('Property Acquition Cost Predictor Web App')
 
@@ -96,5 +111,56 @@ def main():
     
 
 
-if __name__ == '__main__':
-    main()
+if selected == 'Visualiser':
+    #giving a title to the page
+    st.title('Data Visualizer for housing price predictor')
+
+    # Read the selected CSV file
+    df = pd.read_csv("E:\Machine Learning\HOUSE_PRICE_PREDICTION\Housing.csv")
+
+    col1, col2 = st.columns(2)
+
+    columns = df.columns.tolist()
+
+    with col1:
+        st.write("")
+        st.write(df.head())
+
+    with col2:
+        # Allow the user to select columns for plotting
+        x_axis = st.selectbox('Select the X-axis', options=columns+["None"])
+        y_axis = st.selectbox('Select the Y-axis', options=columns+["None"])
+
+        plot_list = ['Line Plot', 'Bar Chart', 'Scatter Plot', 'Distribution Plot', 'Count Plot']
+        # Allow the user to select the type of plot
+        plot_type = st.selectbox('Select the type of plot', options=plot_list)
+
+    # Generate the plot based on user selection
+    if st.button('Generate Plot'):
+
+        fig, ax = plt.subplots(figsize=(6, 4))
+
+        if plot_type == 'Line Plot':
+            sns.lineplot(x=df[x_axis], y=df[y_axis], ax=ax)
+        elif plot_type == 'Bar Chart':
+            sns.barplot(x=df[x_axis], y=df[y_axis], ax=ax)
+        elif plot_type == 'Scatter Plot':
+            sns.scatterplot(x=df[x_axis], y=df[y_axis], ax=ax)
+        elif plot_type == 'Distribution Plot':
+            sns.histplot(df[x_axis], kde=True, ax=ax)
+            y_axis='Density'
+        elif plot_type == 'Count Plot':
+            sns.countplot(x=df[x_axis], ax=ax)
+            y_axis = 'Count'
+
+        # Adjust label sizes
+        ax.tick_params(axis='x', labelsize=10)  # Adjust x-axis label size
+        ax.tick_params(axis='y', labelsize=10)  # Adjust y-axis label size
+
+        # Adjust title and axis labels with a smaller font size
+        plt.title(f'{plot_type} of {y_axis} vs {x_axis}', fontsize=12)
+        plt.xlabel(x_axis, fontsize=10)
+        plt.ylabel(y_axis, fontsize=10)
+
+        # Show the results
+        st.pyplot(fig)
